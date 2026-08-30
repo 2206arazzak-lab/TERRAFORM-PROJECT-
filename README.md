@@ -25,3 +25,59 @@ terraform apply
 terraform output
        ↓
 terraform state list
+**Project Architecture** section near the top:
+
+```markdown
+## 🏗️ Project Architecture
+
+This project uses a modular Terraform architecture:
+
+```text
+                    Terraform
+                        │
+                        ▼
+                 AWS Provider
+                        │
+          ┌─────────────┼─────────────┐
+          │             │             │
+          ▼             ▼             ▼
+      VPC Module    EC2 Module    S3 Module
+          │             │             │
+          │             │             │
+     ┌────┴────┐    ┌───┴────┐       │
+     │         │    │        │       │
+     ▼         ▼    ▼        ▼       ▼
+    VPC     Public EC2    Security  S3 Bucket
+            Subnet       Group      Versioning
+              │
+              ▼
+        Internet Gateway
+
+ **Project Structure**:
+
+```markdown
+## 📁 Project Structure
+
+```text
+terraform/
+├── README.md
+├── main.tf
+├── backend.tf
+├── .gitignore
+├── .terraform.lock.hcl
+│
+└── modules/
+    ├── vpc/
+    │   ├── main.tf
+    │   ├── variables.tf
+    │   └── outputs.tf
+    │
+    ├── ec2/
+    │   ├── main.tf
+    │   ├── variables.tf
+    │   └── outputs.tf
+    │
+    └── s3/
+        ├── main.tf
+        ├── variables.tf
+        └── outputs.tf
